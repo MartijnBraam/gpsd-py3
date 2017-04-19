@@ -195,7 +195,7 @@ class GpsResponse(object):
             raise NoFixError("Needs at least 2D fix")
         return "http://www.openstreetmap.org/?mlat={}&mlon={}&zoom=15".format(self.lat, self.lon)
 
-    def time(self, local_time=False):
+    def get_time(self, local_time=False):
         """ Get the GPS time
 
         :type local_time: bool
