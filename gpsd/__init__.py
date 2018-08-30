@@ -242,6 +242,8 @@ class GpsResponse(object):
         if self.mode == 3:
             return "<GpsResponse 3D Fix {} {} ({} m)>".format(self.lat, self.lon, self.alt)
 
+    def has_fix(self):
+        return self.mode >= 2 and self.sats_valid
 
 def connect(host="127.0.0.1", port=2947):
     """ Connect to a GPSD instance
