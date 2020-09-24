@@ -249,6 +249,9 @@ def connect(host="127.0.0.1", port=2947):
     :param port: port for the GPSD server
     """
     global gpsd_socket, gpsd_stream, verbose_output, state
+    if gpsd_socket or gpsd_stream:
+        disconnect()
+        logger.debug('Previous connection detected. Reconnecting')
     logger.debug("Connecting to gpsd socket at {}:{}".format(host, port))
     gpsd_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     gpsd_socket.connect((host, port))
@@ -267,7 +270,20 @@ def connect(host="127.0.0.1", port=2947):
         raw = gpsd_stream.readline()
         parsed = json.loads(raw)
         _parse_state_packet(parsed)
-
+        
+def disconnect():
+    """ Disconnect to a GPSD
+    """
+    logger.debug('Disconnecting')
+    global gpsd_socket, gpsd_stream, state
+    if gpsd_socket:
+        gpsd_socket.shutdown(socket.SHUT_RDWR)
+        gpsd_socket.close()
+        gpsd_socket = None
+    if gpsd_stream:
+        gpsd_stream.close()
+        gpsd_stream = None
+    state = {}
 
 def get_current():
     """ Poll gpsd for a new position
