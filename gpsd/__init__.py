@@ -138,9 +138,9 @@ class GpsResponse(object):
             result.error['c'] = last_tpv['epc'] if 'epc' in last_tpv else 0
             result.error['v'] = last_tpv['epv'] if 'epv' in last_tpv else 0
 
-        result.heading = last_att['heading']
-        result.pitch = last_att['pitch']
-        result.roll = last_att['roll']
+        result.heading = last_att['heading'] if 'heading' in last_att else 0.0
+        result.pitch = last_att['pitch'] if 'pitch' in last_att else 0.0
+        result.roll = last_att['roll'] if 'roll' in last_att else 0.0
 
         return result
 
