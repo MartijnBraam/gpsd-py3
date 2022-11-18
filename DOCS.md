@@ -13,6 +13,10 @@ Description and information copied from [http://catb.org/gpsd/gpsd_json.html](ht
 	- *Description:* The number of satellites received by the GPS unit
 	- *Availability:* Always
 	- *Data Type:* Int
+- **sats_valid**
+	- *Description:* The number of satellites with valid information
+	- *Availability:* Always
+	- *Data Type:* Int
 - **lat**
 	- *Description:* Latitude in degrees
 	- *Availability:* mode >= 2
@@ -73,15 +77,10 @@ Description and information copied from [http://catb.org/gpsd/gpsd_json.html](ht
 	- *Availability:* mode >= 2
 	- *Parameters:* None
 	- *Return Type:* tuple (x-y plane, z direction)
-- **time_utc**
-	- *Description:* Get the GPS time UTC
+- **get_time(local_time: bool)**
+	- *Description:* Get the GPS time UTC or in local timezone
 	- *Availability:* mode >= 2
-	- *Parameters:* None
-	- *Return Type:* datetime
-- **time_local**
-	- *Description:* Get the GPS time in local timezone
-	- *Availability:* mode >= 2
-	- *Parameters:* None
+	- *Parameters:* local_time
 	- *Return Type:* datetime
 - **map_url**
 	- *Description:* Get a openstreetmap url for the current position
