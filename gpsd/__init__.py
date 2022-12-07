@@ -89,9 +89,9 @@ class GpsResponse(object):
         self.climb = 0
         self.time = ''
         self.error = {}
-        self.heading = 0.0
-        self.pitch = 0.0
-        self.roll = 0.0
+        self.heading = None
+        self.pitch = None
+        self.roll = None
 
     @classmethod
     def from_json(cls, packet):
@@ -138,9 +138,9 @@ class GpsResponse(object):
             result.error['c'] = last_tpv['epc'] if 'epc' in last_tpv else 0
             result.error['v'] = last_tpv['epv'] if 'epv' in last_tpv else 0
 
-        result.heading = last_att['heading'] if 'heading' in last_att else 0.0
-        result.pitch = last_att['pitch'] if 'pitch' in last_att else 0.0
-        result.roll = last_att['roll'] if 'roll' in last_att else 0.0
+        result.heading = last_att['heading'] if 'heading' in last_att else None
+        result.pitch = last_att['pitch'] if 'pitch' in last_att else None
+        result.roll = last_att['roll'] if 'roll' in last_att else None
 
         return result
 
@@ -243,7 +243,11 @@ class GpsResponse(object):
         return time
 
     def heading(self):
-        """ Get the heading in degrees from true north.
+        """ Get the heading in degrees from true north. 
+
+        GPSD provides vehicle attitude reports for selective gyroscope
+        and digital compass sensors. If the sensor does not support
+        vehicle attitude reports, then this method will return None.
 
         :return: float
         """
@@ -252,12 +256,20 @@ class GpsResponse(object):
     def pitch(self):
         """ Get the pitch in degrees.
 
+        GPSD provides vehicle attitude reports for selective gyroscope
+        and digital compass sensors. If the sensor does not support
+        vehicle attitude reports, then this method will return None.
+
         :return: float
         """
         return self.pitch
 
     def roll(self):
         """ Get the roll in degrees.
+
+        GPSD provides vehicle attitude reports for selective gyroscope
+        and digital compass sensors. If the sensor does not support
+        vehicle attitude reports, then this method will return None.
 
         :return: float
         """

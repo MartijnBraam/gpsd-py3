@@ -55,6 +55,18 @@ Description and information copied from [http://catb.org/gpsd/gpsd_json.html](ht
 	- *Description:* Climb (positive) or sink (negative) rate, meters per second
 	- *Availability:* mode >= 3
 	- *Data Type:* float
+- **heading**
+	- *Description:* Heading, degrees from true north
+	- *Availability:* Always *(**NOTE:** None if attitude is unavailable)*
+	- *Data Type:* float
+- **pitch**
+	- *Description:* Pitch, degrees
+	- *Availability:* Always *(**NOTE:** None if attitude is unavailable)*
+	- *Data Type:* float
+- **roll**
+	- *Description:* Roll, degrees
+	- *Availability:* Always *(**NOTE:** None if attitude is unavailable)*
+	- *Data Type:* float
 
 ### Methods ###
 - **position**
@@ -107,7 +119,21 @@ Description and information copied from [http://catb.org/gpsd/gpsd_json.html](ht
 	- *Availability:* mode >= 3
 	- *Parameters:* None
 	- *Return Type:* float
-
+- **heading**
+	- *Description:* Heading, degrees from true north
+	- *Availability:* Always *(**NOTE:** None if attitude is unavailable)*
+	- *Parameters:* None
+	- *Data Type:* float
+- **pitch**
+	- *Description:* Pitch, degrees
+	- *Availability:* Always *(**NOTE:** None if attitude is unavailable)*
+	- *Parameters:* None
+	- *Data Type:* float
+- **roll**
+	- *Description:* Roll, degrees
+	- *Availability:* Always *(**NOTE:** None if attitude is unavailable)*
+	- *Parameters:* None
+	- *Data Type:* float
 
 Exception Information
 -----
@@ -184,6 +210,21 @@ else:
 print("  Altitude: NOT AVAILABLE")
 print(" Climb: NOT AVAILABLE")
 
+if (packet.heading is not None):
+print(" Heading: " + str(packet.heading))
+else:
+print(" Heading: NOT AVAILABLE")
+
+if (packet.pitch is not None):
+print(" Pitch: " + str(packet.pitch))
+else:
+print(" Pitch: NOT AVAILABLE")
+
+if (packet.roll is not None):
+print(" Roll: " + str(packet.roll))
+else:
+print(" Roll: NOT AVAILABLE")
+
 print(" ************** METHODS ************** ")
 if packet.mode >= 2:
 print("  Location: " + str(packet.position()))
@@ -208,6 +249,21 @@ else:
 print("  Altitude: NOT AVAILABLE")
 # print("  Movement: NOT AVAILABLE")
 # print(" Speed Vertical: NOT AVAILABLE")
+
+if (packet.heading is not None):
+print(" Heading: " + str(packet.heading()))
+else:
+print(" Heading: NOT AVAILABLE")
+
+if (packet.pitch is not None):
+print(" Pitch: " + str(packet.pitch()))
+else:
+print(" Pitch: NOT AVAILABLE")
+
+if (packet.roll is not None):
+print(" Roll: " + str(packet.roll()))
+else:
+print(" Roll: NOT AVAILABLE")
 
 print(" ************* FUNCTIONS ************* ")
 print("Device: " + str(gpsd.device()))
