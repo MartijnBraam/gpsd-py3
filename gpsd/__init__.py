@@ -44,6 +44,9 @@ class GpsResponse(object):
     :type climb: float
     :type time: str
     :type error: dict[str, float]
+    :type heading: float
+    :type pitch: float
+    :type roll: float
 
     :var self.mode: Indicates the status of the GPS reception, 0=No value, 1=No fix, 2=2D fix, 3=3D fix
     :var self.sats: The number of satellites received by the GPS unit
@@ -56,6 +59,9 @@ class GpsResponse(object):
     :var self.climb: Climb (positive) or sink (negative) rate, meters per second
     :var self.time: Time/date stamp in ISO8601 format, UTC. May have a fractional part of up to .001sec precision.
     :var self.error: GPSD error margin information
+    :var self.heading: heading, degrees from true north.
+    :var self.pitch: pitch in degrees.
+    :var self.roll: roll in degrees.
 
     GPSD error margin information
     -----------------------------
@@ -83,6 +89,9 @@ class GpsResponse(object):
         self.climb = 0
         self.time = ''
         self.error = {}
+        self.heading = None
+        self.pitch = None
+        self.roll = None
 
     @classmethod
     def from_json(cls, packet):
@@ -96,6 +105,7 @@ class GpsResponse(object):
             raise UserWarning('GPS not active')
         last_tpv = packet['tpv'][-1]
         last_sky = packet['sky'][-1]
+        last_att = packet['att'][-1]
 
         if 'satellites' in last_sky:
             result.sats = len(last_sky['satellites'])
@@ -127,6 +137,10 @@ class GpsResponse(object):
             result.climb = last_tpv['climb'] if 'climb' in last_tpv else 0
             result.error['c'] = last_tpv['epc'] if 'epc' in last_tpv else 0
             result.error['v'] = last_tpv['epv'] if 'epv' in last_tpv else 0
+
+        result.heading = last_att['heading'] if 'heading' in last_att else None
+        result.pitch = last_att['pitch'] if 'pitch' in last_att else None
+        result.roll = last_att['roll'] if 'roll' in last_att else None
 
         return result
 
@@ -227,6 +241,39 @@ class GpsResponse(object):
             time = time.replace(tzinfo=datetime.timezone.utc).astimezone()
 
         return time
+
+    def heading(self):
+        """ Get the heading in degrees from true north. 
+
+        GPSD provides vehicle attitude reports for selective gyroscope
+        and digital compass sensors. If the sensor does not support
+        vehicle attitude reports, then this method will return None.
+
+        :return: float
+        """
+        return self.heading
+
+    def pitch(self):
+        """ Get the pitch in degrees.
+
+        GPSD provides vehicle attitude reports for selective gyroscope
+        and digital compass sensors. If the sensor does not support
+        vehicle attitude reports, then this method will return None.
+
+        :return: float
+        """
+        return self.pitch
+
+    def roll(self):
+        """ Get the roll in degrees.
+
+        GPSD provides vehicle attitude reports for selective gyroscope
+        and digital compass sensors. If the sensor does not support
+        vehicle attitude reports, then this method will return None.
+
+        :return: float
+        """
+        return self.roll
 
     def __repr__(self):
         modes = {
