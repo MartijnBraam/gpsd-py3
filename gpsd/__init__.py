@@ -221,10 +221,10 @@ class GpsResponse(object):
         """
         if self.mode < 2:
             raise NoFixError("Needs at least 2D fix")
-        time = datetime.datetime.strptime(self.time, gpsTimeFormat)
+        time = datetime.datetime.strptime(self.time, gpsTimeFormat).replace(tzinfo=datetime.timezone.utc)
 
         if local_time:
-            time = time.replace(tzinfo=datetime.timezone.utc).astimezone()
+            time = time.astimezone()
 
         return time
 
