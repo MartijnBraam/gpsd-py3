@@ -214,25 +214,28 @@ print("Device: " + str(gpsd.device()))
 ```
 
 
-###Sample Output##
-     ************ PROPERTIES *************
-                  Mode: 3
-            Satellites: 10
-              Latitude: 39.8333333
-             Longitude: -98.585522
-                 Track: 237.31
-      Horizontal Speed: 0.0
-                  Time: 2016-08-05T03:02:13.000Z
-                 Error: {'v': 31.97, 't': 0.005, 'x': 10.055, 'c': (63.94,), 's': 35 .16, 'y': 17.58}
-              Altitude: 100.3
-                 Climb: 0.0
-     ************** METHODS **************
-               Location: (39.8333333, -98.585522)
-                  Speed: 0
-     Position Precision: (17.58, 31.97)
-               Time UTC: 2016-08-05 03:02:13
-             Time Local: 2016-08-04 23:02:13-04:00
-                Map URL: http://www.openstreetmap.org/?mlat=39.8333333&mlon=-98.585522&zoom=15
-               Altitude: 100.3
-     ************* FUNCTIONS *************
-                 Device: {'driver': 'MTK-3301', 'path': '/dev/ttyS0', 'speed': 9600}
+### Sample Output ###
+
+```
+************ PROPERTIES *************
+             Mode: 3
+       Satellites: 10
+         Latitude: 39.8333333
+        Longitude: -98.585522
+            Track: 237.31
+ Horizontal Speed: 0.0
+             Time: 2016-08-05T03:02:13.000Z
+            Error: {'v': 31.97, 't': 0.005, 'x': 10.055, 'c': (63.94,), 's': 35 .16, 'y': 17.58}
+         Altitude: 100.3
+            Climb: 0.0
+************** METHODS **************
+          Location: (39.8333333, -98.585522)
+             Speed: 0
+Position Precision: (17.58, 31.97)
+          Time UTC: 2016-08-05 03:02:13
+        Time Local: 2016-08-04 23:02:13-04:00
+           Map URL: http://www.openstreetmap.org/?mlat=39.8333333&mlon=-98.585522&zoom=15
+          Altitude: 100.3
+************* FUNCTIONS *************
+            Device: {'driver': 'MTK-3301', 'path': '/dev/ttyS0', 'speed': 9600}
+```
